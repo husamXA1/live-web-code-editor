@@ -1,8 +1,29 @@
-document.getElementById("htmlCode").value="<div>\n\n</div>";
-document.getElementById("cssCode").value="<style>\n\n</style>";
-document.getElementById("jsCode").value="<script>\n\n</script>";
+const htmlCode = document.getElementById("htmlCode");
+const cssCode = document.getElementById("cssCode");
+const jsCode = document.getElementById("jsCode");
+
+const savedCodes = localStorage.getItem("codes");
+if (savedCodes) {
+    const codeObj = JSON.parse(savedCodes);
+    htmlCode.value = codeObj.html;
+    cssCode.value = codeObj.css;
+    jsCode.value = codeObj.js;
+} else {
+    htmlCode.value = "<div>\n\n</div>";
+    cssCode.value = "<style>\n\n</style>";
+    jsCode.value = "<script>\n\n</script>";
+}
+
+function saveEdits() {
+    localStorage.setItem("codes", JSON.stringify({
+        html: htmlCode.value,
+        css: cssCode.value,
+        js: jsCode.value
+    }));
+}
 
 function showPreview(){
+    saveEdits();
     var htmlCode = document.getElementById("htmlCode").value;
     var cssCode = ""+document.getElementById("cssCode").value+"";
     var jsCode = ""+document.getElementById("jsCode").value+"";
